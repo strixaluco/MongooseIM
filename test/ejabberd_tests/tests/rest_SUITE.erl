@@ -51,8 +51,8 @@
 
 all() ->
     [
-     {group, admin},
-     {group, dynamic_module}
+     {group, admin}
+     %{group, dynamic_module}
     ].
 
 groups() ->
@@ -61,15 +61,15 @@ groups() ->
     ].
 
 test_cases() ->
-    [commands_are_listed,
-     non_existent_command_returns_404,
-     user_can_be_registered_and_removed,
-     sessions_are_listed,
-     session_can_be_kicked,
-     messages_are_sent_and_received,
-     messages_are_archived,
-     messages_can_be_paginated,
-     password_can_be_changed
+    [%commands_are_listed,
+     % non_existent_command_returns_404,
+     user_can_be_registered_and_removed
+     % sessions_are_listed,
+     % session_can_be_kicked,
+     % messages_are_sent_and_received,
+     % messages_are_archived,
+     % messages_can_be_paginated,
+     % password_can_be_changed
      ].
 
 suite() ->
@@ -121,7 +121,7 @@ user_can_be_registered_and_removed(_Config) ->
     {?OK, Lusers} = gett(<<"/users/localhost">>),
     assert_inlist(<<"alice@localhost">>, Lusers),
     % create user
-    CrUser = #{user => <<"mike">>, password => <<"nicniema">>},
+    CrUser = #{username => <<"mike">>, password => <<"nicniema">>},
     {?CREATED, _} = post(<<"/users/localhost">>, CrUser),
     {?OK, Lusers1} = gett(<<"/users/localhost">>),
     assert_inlist(<<"mike@localhost">>, Lusers1),
